@@ -795,8 +795,10 @@ public class XMPPConnection extends Connection {
         KeyStore ks = null;
         KeyManager[] kms = null;
         PasswordCallback pcb = null;
-
-        if(config.getCallbackHandler() == null) {
+        
+        char[] password = null;
+        
+        if(config.getCallbackHandler() == null && config.getKeystorePassword() == null) {
            ks = null;
         } else if (context == null) {
             //System.out.println("Keystore type: "+configuration.getKeystoreType());
@@ -830,9 +832,20 @@ public class XMPPConnection extends Connection {
             else {
                 ks = KeyStore.getInstance(config.getKeystoreType());
                 try {
-                    pcb = new PasswordCallback("Keystore Password: ",false);
-                    config.getCallbackHandler().handle(new Callback[]{pcb});
-                    ks.load(new FileInputStream(config.getKeystorePath()), pcb.getPassword());
+                	                	
+                	if (config.getKeystorePassword() != null)
+                	{
+                		password = config.getKeystorePassword().toCharArray();
+                	}
+                	else
+                	{
+	                    pcb = new PasswordCallback("Keystore Password: ",false);
+	                    config.getCallbackHandler().handle(new Callback[]{pcb});
+	                    
+	                    password = pcb.getPassword();
+                	}
+                	
+                    ks.load(new FileInputStream(config.getKeystorePath()), password);
                 }
                 catch(Exception e) {
                     ks = null;
@@ -842,7 +855,7 @@ public class XMPPConnection extends Connection {
             KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
             try {
                 if(pcb == null) {
-                    kmf.init(ks,null);
+                    kmf.init(ks, password);
                 } else {
                     kmf.init(ks,pcb.getPassword());
                     pcb.clearPassword();
