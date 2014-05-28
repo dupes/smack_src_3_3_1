@@ -69,8 +69,8 @@ public class ConnectionConfiguration implements Cloneable {
 
     private boolean compressionEnabled = false;
 
-    private String[] cipherSuites;
-    private String[] protocols;
+    private String cipherSuites;
+    private String protocols;
     
     private boolean saslAuthenticationEnabled = true;
     /**
@@ -746,20 +746,26 @@ public class ConnectionConfiguration implements Cloneable {
         return resource;
     }
 
-    public void setEnabledCipherSuites(final String[] ciphersSuites) {
+    public void setEnabledCipherSuites(final String cipherSuites) {
     	this.cipherSuites = cipherSuites;
     }
 
     public String[] getEnabledCipherSuites() {
-    	return this.cipherSuites;
+    	if (this.cipherSuites == null || this.cipherSuites.isEmpty())
+    		return null;
+    	
+    	return this.cipherSuites.split(",");
     }
     
-    public void setEnabledProtcols(final String[] protocols) {
+    public void setEnabledProtcols(final String protocols) {
     	this.protocols = protocols;
     }
     
     public String[] getEnabledProtocols() {
-    	return this.protocols;
+    	if (this.protocols == null || this.protocols.isEmpty())
+    		return null;
+    	
+    	return this.protocols.split(",");
     }
     
     /**

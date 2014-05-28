@@ -867,6 +867,17 @@ public class XMPPConnection extends Connection {
         socket.setKeepAlive(true);
         // Initialize the reader and writer with the new secured version
         initReaderAndWriter();
+        
+        String[] ciphers = config.getEnabledCipherSuites();
+        
+        if (ciphers != null)        	
+        	((SSLSocket) socket).setEnabledCipherSuites(ciphers);
+        	
+        String[] protocols = config.getEnabledProtocols();
+        
+        if (protocols != null)
+        	((SSLSocket) socket).setEnabledProtocols(protocols);
+        
         // Proceed to do the handshake
         ((SSLSocket) socket).startHandshake();
         //if (((SSLSocket) socket).getWantClientAuth()) {
