@@ -57,6 +57,8 @@ public class ConnectionConfiguration implements Cloneable {
     private String truststorePath;
     private String truststoreType;
     private String truststorePassword;
+    private String keystorePassword;
+    
     private String keystorePath;
     private String keystoreType;
     private String pkcs11Library;
@@ -337,6 +339,14 @@ public class ConnectionConfiguration implements Cloneable {
         this.truststorePassword = truststorePassword;
     }
 
+    public void setKeystorePassword(String keystorePassword) {
+    	this.keystorePassword = keystorePassword;
+    }
+    
+    public String getKeystorePassword() {
+    	return this.keystorePassword;
+    }
+    
     /**
      * Retuns the path to the keystore file. The key store file contains the 
      * certificates that may be used to authenticate the client to the server,
@@ -757,7 +767,7 @@ public class ConnectionConfiguration implements Cloneable {
     	return this.cipherSuites.split(",");
     }
     
-    public void setEnabledProtcols(final String protocols) {
+    public void setEnabledProtocols(final String protocols) {
     	this.protocols = protocols;
     }
     
