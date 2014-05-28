@@ -69,6 +69,9 @@ public class ConnectionConfiguration implements Cloneable {
 
     private boolean compressionEnabled = false;
 
+    private String[] cipherSuites;
+    private String[] protocols;
+    
     private boolean saslAuthenticationEnabled = true;
     /**
      * Used to get information from the user
@@ -743,6 +746,22 @@ public class ConnectionConfiguration implements Cloneable {
         return resource;
     }
 
+    public void setEnabledCipherSuites(final String[] ciphersSuites) {
+    	this.cipherSuites = cipherSuites;
+    }
+
+    public String[] getEnabledCipherSuites() {
+    	return this.cipherSuites;
+    }
+    
+    public void setEnabledProtcols(final String[] protocols) {
+    	this.protocols = protocols;
+    }
+    
+    public String[] getEnabledProtocols() {
+    	return this.protocols;
+    }
+    
     /**
      * Returns true if an available presence should be sent when logging in while reconnecting.
      *
