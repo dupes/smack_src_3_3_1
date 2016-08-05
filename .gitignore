@@ -3,3 +3,5 @@ smack.jar
 smackx.jar
 smackx-debug.jar
 smackx.jingle.jar
+.project
+.classpath
