@@ -57,6 +57,8 @@ public class ConnectionConfiguration implements Cloneable {
     private String truststorePath;
     private String truststoreType;
     private String truststorePassword;
+    private String keystorePassword;
+    
     private String keystorePath;
     private String keystoreType;
     private String pkcs11Library;
@@ -69,6 +71,9 @@ public class ConnectionConfiguration implements Cloneable {
 
     private boolean compressionEnabled = false;
 
+    private String cipherSuites;
+    private String protocols;
+    
     private boolean saslAuthenticationEnabled = true;
     /**
      * Used to get information from the user
@@ -334,6 +339,14 @@ public class ConnectionConfiguration implements Cloneable {
         this.truststorePassword = truststorePassword;
     }
 
+    public void setKeystorePassword(String keystorePassword) {
+    	this.keystorePassword = keystorePassword;
+    }
+    
+    public String getKeystorePassword() {
+    	return this.keystorePassword;
+    }
+    
     /**
      * Retuns the path to the keystore file. The key store file contains the 
      * certificates that may be used to authenticate the client to the server,
@@ -743,6 +756,28 @@ public class ConnectionConfiguration implements Cloneable {
         return resource;
     }
 
+    public void setEnabledCipherSuites(final String cipherSuites) {
+    	this.cipherSuites = cipherSuites;
+    }
+
+    public String[] getEnabledCipherSuites() {
+    	if (this.cipherSuites == null || this.cipherSuites.isEmpty())
+    		return null;
+    	
+    	return this.cipherSuites.split(",");
+    }
+    
+    public void setEnabledProtocols(final String protocols) {
+    	this.protocols = protocols;
+    }
+    
+    public String[] getEnabledProtocols() {
+    	if (this.protocols == null || this.protocols.isEmpty())
+    		return null;
+    	
+    	return this.protocols.split(",");
+    }
+    
     /**
      * Returns true if an available presence should be sent when logging in while reconnecting.
      *
